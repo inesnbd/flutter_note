@@ -1,0 +1,11 @@
+C:\Users\Djaouida\AndroidStudioProjects => dossier ou est le projet
+dans le dossier lib -> main.dart
+
+les screens : 
+note_view_screen.dart – Page utilisée pour lire les notes
+database_helper.dart - Il contient toutes les opérations liées à la base de données.
+note_provider.dart - Le code contient pour ajouter, mettre à jour et supprimer des opérations et notifier les auditeurs.
+note.dart - Il contient l'identifiant, le titre, le contenu, la date et l'emplacement de l'image.
+note_edit_screen.dart – Cet écran est utilisé pour créer et mettre à jour la note.
+note_list_screen.dart - Ceci est l'écran principal, il répertorie vos notes.
+constants.dart - Il répertorie les constantes de style et les valeurs de couleur.
