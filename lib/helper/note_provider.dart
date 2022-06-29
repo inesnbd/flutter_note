@@ -30,14 +30,12 @@ class NoteProvider with ChangeNotifier {
       _items[_items.indexWhere((note) => note.id == id)] = note;
     }
     notifyListeners();
-    DatabaseHelper.insert(
-      {
+    DatabaseHelper.insert({
         'id': note.id,
         'title': note.title,
         'content': note.content,
         'imagePath': note.imagePath,
-      },
-    );
+      });
   }
 
   static Future insert(Map<String, Object> data) async {
@@ -52,8 +50,7 @@ class NoteProvider with ChangeNotifier {
 
     _items = notesList
         .map(
-          (item) =>
-          Note(
+          (item) => Note(
               item['id'], item['title'], item['content'], item['imagePath']),
           )
         .toList();

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
@@ -15,13 +16,17 @@ import 'note_view_screen.dart';
 
 class NoteEditScreen extends StatefulWidget {
   static const route = '/edit-note';
+
   @override
   _NoteEditScreenState createState() => _NoteEditScreenState();
 }
-class _NoteEditScreenState extends State {
+
+class _NoteEditScreenState extends State <NoteEditScreen> {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
+
   File? _image = null;
+
   final picker = ImagePicker();
 
   bool firstTime = true;
@@ -49,15 +54,22 @@ class _NoteEditScreenState extends State {
           _image = File(selectedNote.imagePath);
         }
       }
-      firstTime = false;
     }
+    firstTime = false;
   }
 
   @override
   void dispose() {
     titleController.dispose();
     contentController.dispose();
+
     super.dispose();
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<Note>('selectedNote', selectedNote));
   }
 
   @override
@@ -92,7 +104,7 @@ class _NoteEditScreenState extends State {
             color: Colors.black,
             onPressed: () {
               if (id != null) {
-                var showDialog = _showDialog();
+                _showDialog();
               } else {
                 Navigator.pop(context);
               }
@@ -119,10 +131,7 @@ class _NoteEditScreenState extends State {
             if(_image != null)
               Container(
                 padding: EdgeInsets.all(10.0),
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                width: MediaQuery.of(context).size.width,
                 height: 250.0,
                 child: Stack(
                   children: [
@@ -150,9 +159,8 @@ class _NoteEditScreenState extends State {
                             onTap: () {
                               setState(
                                     () {
-                                  _image == null;
-                                },
-                              );
+                                  _image = null;
+                                });
                             },
                             child: Icon(
                               Icons.delete,
@@ -173,7 +181,7 @@ class _NoteEditScreenState extends State {
                 maxLines: null,
                 style: createContent,
                 decoration: InputDecoration(
-                  hintText: 'Taper quelque chose...',
+                  hintText: "Taper quelque chose...",
                   border: InputBorder.none,
                 ),
               ),
@@ -185,6 +193,7 @@ class _NoteEditScreenState extends State {
         onPressed: () {
           if (titleController.text.isEmpty)
             titleController.text = 'Remarque sans titre';
+
           saveNote();
         },
         child: Icon(Icons.save),
@@ -192,12 +201,13 @@ class _NoteEditScreenState extends State {
     );
   }
 
-  void getImage(ImageSource imageSource) async {
+  getImage(ImageSource imageSource) async {
     PickedFile? imageFile = await picker.getImage(source: imageSource);
 
     if (imageFile == null) return;
 
     File tmpFile = File(imageFile.path);
+
     final appDir = await getApplicationDocumentsDirectory();
     final fileName = basename(imageFile.path);
 
@@ -211,7 +221,13 @@ class _NoteEditScreenState extends State {
   void saveNote() {
     String title = titleController.text.trim();
     String content = contentController.text.trim();
-    String? imagePath = _image != null ? _image?.path : null;
+
+    String? imagePath;
+    if (_image != null) {
+      imagePath = _image?.path;
+    } else {
+      imagePath = null;
+    }
 
     if (id != null) {
       Provider.of<NoteProvider>(this.context, listen: false)
@@ -226,6 +242,8 @@ class _NoteEditScreenState extends State {
       Navigator.of(this.context)
           .pushReplacementNamed(NoteViewScreen.route, arguments: id);
     }
+  }
+
     void _showDialog() {
       showDialog(
           context: this.context,
@@ -234,7 +252,7 @@ class _NoteEditScreenState extends State {
           });
     }
   }
-}
 
-class _showDialog {
-}
+
+
+

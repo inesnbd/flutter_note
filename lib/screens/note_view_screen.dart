@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:note/helper/note_provider.dart';
 import 'package:note/models/note.dart';
 import 'package:note/utils/constants.dart';
@@ -8,16 +9,14 @@ import 'package:note/widgets/delete_popup.dart';
 import '../models/note.dart';
 import 'note_edit_screen.dart';
 
-class NoteViewScreen extends StatefulWidget
-{
+class NoteViewScreen extends StatefulWidget {
   static const route = '/note-view';
 
   @override
   _NoteViewScreenState createState() => _NoteViewScreenState();
 }
 
-class _NoteViewScreenState extends State<NoteViewScreen>
-{
+class _NoteViewScreenState extends State<NoteViewScreen> {
   late Note selectedNote;
 
   @override
@@ -64,8 +63,9 @@ class _NoteViewScreenState extends State<NoteViewScreen>
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(style: viewTitleStyle,
+              child: Text(
                 selectedNote!.title,
+                style: viewTitleStyle,
               ),
             ),
             Row(
@@ -77,7 +77,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
                     size: 18,
                   ),
                 ),
-                Text('${selectedNote.date}')
+                Text('${selectedNote?.date}')
               ],
             ),
             if (selectedNote.imagePath != null)
@@ -107,7 +107,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
 
   _showDialog() {
     showDialog(
-        context: this.context,
+        context: context,
         builder: (context) {
           return DeletePopUp(selectedNote);
         });

@@ -15,7 +15,7 @@ class DeletePopUp extends StatelessWidget {
       title: Text('Supprimer ?'),
       content: Text('Souhaitez vous supprimer cette note ?'),
       actions: [
-        FlatButton( //TextButton
+        TextButton( //TextButton
           child: Text('Oui'),
           onPressed: () {
             Provider.of<NoteProvider>(context, listen: false)
@@ -23,12 +23,12 @@ class DeletePopUp extends StatelessWidget {
             Navigator.popUntil(context, ModalRoute.withName('/'));
           },
         ),
-        FlatButton( //TextButton à voir si il faut remplacer
+        TextButton(
           child: Text('Non'),
           onPressed: () {
             Navigator.pop(context);
           },
-        )
+        ),
       ],
     );
   }
