@@ -64,7 +64,7 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                selectedNote!.title,
+                selectedNote.title,
                 style: viewTitleStyle,
               ),
             ),
@@ -77,7 +77,7 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
                     size: 18,
                   ),
                 ),
-                Text('${selectedNote?.date}')
+                Text('${selectedNote.date}')
               ],
             ),
             if (selectedNote.imagePath != null)

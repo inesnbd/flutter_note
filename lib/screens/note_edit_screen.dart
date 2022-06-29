@@ -47,8 +47,8 @@ class _NoteEditScreenState extends State <NoteEditScreen> {
         selectedNote =
             Provider.of<NoteProvider>(this.context, listen: false).getNote(id!);
 
-        titleController.text = selectedNote!.title;
-        contentController.text = selectedNote!.content;
+        titleController.text = selectedNote.title;
+        contentController.text = selectedNote.content;
 
         if (selectedNote.imagePath != null) {
           _image = File(selectedNote.imagePath);
