@@ -85,7 +85,7 @@ Widget header() {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'ANDROIDRIDE\'S',
+            'Ines NEBBAD',
             style: headerRideStyle,
           ),
           Text(
@@ -99,7 +99,7 @@ Widget header() {
 }
 
 void _launchUrl() async {
-  const url = 'https://www.androidride.com';
+  const url = '#';
   if (await canLaunch(url)) {
     await launch(url);
   } else {
@@ -126,7 +126,7 @@ Widget noNotesUI(BuildContext context) {
             text: TextSpan(
               style: noNotesStyle,
               children: [
-                TextSpan(text: ' Non disponible\nTap on "'),
+                TextSpan(text: ' Non disponible'),
                 TextSpan(
                     text: '+',
                     style: boldPlus,
@@ -134,7 +134,7 @@ Widget noNotesUI(BuildContext context) {
                       ..onTap = () {
                         goToNoteEditScreen(context);
                       }),
-                TextSpan(text: '" ajouter une nouvelle note'),
+                TextSpan(text: 'ajouter une nouvelle note'),
               ],
             ),
           )

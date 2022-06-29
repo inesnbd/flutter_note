@@ -21,7 +21,7 @@ class NoteEditScreen extends StatefulWidget {
 class _NoteEditScreenState extends State {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
-  late File _image;
+  File? _image = null;
   final picker = ImagePicker();
 
   bool firstTime = true;
@@ -45,7 +45,7 @@ class _NoteEditScreenState extends State {
         titleController.text = selectedNote!.title;
         contentController.text = selectedNote!.content;
 
-        if (selectedNote?.imagePath != null) {
+        if (selectedNote.imagePath != null) {
           _image = File(selectedNote.imagePath);
         }
       }
@@ -130,7 +130,7 @@ class _NoteEditScreenState extends State {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20.0),
                         image: DecorationImage(
-                          image: FileImage(_image),
+                          image: FileImage(_image!),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -150,7 +150,7 @@ class _NoteEditScreenState extends State {
                             onTap: () {
                               setState(
                                     () {
-                                  _image != null;
+                                  _image == null;
                                 },
                               );
                             },
@@ -211,7 +211,7 @@ class _NoteEditScreenState extends State {
   void saveNote() {
     String title = titleController.text.trim();
     String content = contentController.text.trim();
-    String? imagePath = _image != null ? _image.path : null;
+    String? imagePath = _image != null ? _image?.path : null;
 
     if (id != null) {
       Provider.of<NoteProvider>(this.context, listen: false)
