@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:note/helper/note_provider.dart';
-import 'package:note/utils/constants.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:note/helper/note_provider.dart';
+import 'package:note/screens/note_edit_screen.dart';
+import 'package:note/utils/constants.dart';
+import 'package:note/widgets/list_item.dart';
+
 
 class NoteListScreen extends StatelessWidget {
 
@@ -18,8 +23,47 @@ class NoteListScreen extends StatelessWidget {
             ),
           );
         } else {
-          return Container();
+          if(snapshot.connectionState == ConnectionState.done)
+          {
+            return Scaffold(
+              body: Consumer<NoteProvider>(
+                child: noNotesUI(context),
+                builder: (context, noteprovider, child) =>
+                  Container(
+                    child: noteprovider.items.length <= 0
+                        ? child
+                        : ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            itemCount: noteprovider.items.length + 1,
+                            itemBuilder: (context, index){
+                              if(index == 0) {
+                                return header();
+                              } else {
+                                  final i = index - 1;
+                                  final item = noteprovider.items[i];
+
+                                  return ListItem(
+                                    item.id,
+                                    item.title,
+                                    item.content,
+                                    item.imagePath,
+                                    item.date,
+                                  );
+                              }
+                            },
+                          ),
+                  ),
+                      ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: (){
+                  goToNoteEditScreen(context);
+                },
+                child: Icon(Icons.add),
+              ),
+            );
+          }
         }
+        return Container();
       },
     );
   }
@@ -72,7 +116,7 @@ Widget noNotesUI(BuildContext context) {
           Padding(
             padding: const EdgeInsets.only(top: 50.0),
             child: Image.asset(
-              'crying_emoji.png',
+              'emoji.jpg',
               fit: BoxFit.cover,
               width: 200,
               height: 200,
@@ -82,7 +126,7 @@ Widget noNotesUI(BuildContext context) {
             text: TextSpan(
               style: noNotesStyle,
               children: [
-                TextSpan(text: ' There is no note available\nTap on "'),
+                TextSpan(text: ' Non disponible\nTap on "'),
                 TextSpan(
                     text: '+',
                     style: boldPlus,
@@ -90,7 +134,7 @@ Widget noNotesUI(BuildContext context) {
                       ..onTap = () {
                         goToNoteEditScreen(context);
                       }),
-                TextSpan(text: '" to add new note'),
+                TextSpan(text: '" ajouter une nouvelle note'),
               ],
             ),
           )
@@ -98,4 +142,8 @@ Widget noNotesUI(BuildContext context) {
       ),
     ],
   );
+}
+
+void goToNoteEditScreen(BuildContext context) {
+  Navigator.of(context).pushNamed(NoteEditScreen.route);
 }
