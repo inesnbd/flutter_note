@@ -12,8 +12,6 @@ import 'package:note/helper/note_provider.dart';
 import 'package:note/widgets/delete_popup.dart';
 import 'note_view_screen.dart';
 
-
-
 class NoteEditScreen extends StatefulWidget {
   static const route = '/edit-note';
 
@@ -202,6 +200,7 @@ class _NoteEditScreenState extends State <NoteEditScreen> {
   }
 
   getImage(ImageSource imageSource) async {
+
     PickedFile? imageFile = await picker.getImage(source: imageSource);
 
     if (imageFile == null) return;
@@ -221,24 +220,18 @@ class _NoteEditScreenState extends State <NoteEditScreen> {
   void saveNote() {
     String title = titleController.text.trim();
     String content = contentController.text.trim();
-
-    String? imagePath;
-    if (_image != null) {
-      imagePath = _image?.path;
-    } else {
-      imagePath = null;
-    }
+    String? imagePath = _image != null ? _image?.path : null;
 
     if (id != null) {
       Provider.of<NoteProvider>(this.context, listen: false)
           .addOrUpdateNote(id!, title, content, imagePath!, EditMode.UPDATE);
       Navigator.of(this.context).pop();
     } else {
-      int id = DateTime
-          .now()
-          .millisecondsSinceEpoch;
+      int id = DateTime.now().millisecondsSinceEpoch;
+
       Provider.of<NoteProvider>(this.context, listen: false)
           .addOrUpdateNote(id, title, content, imagePath!, EditMode.ADD);
+
       Navigator.of(this.context)
           .pushReplacementNamed(NoteViewScreen.route, arguments: id);
     }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'package:note/helper/note_provider.dart';
 import 'package:note/screens/note_edit_screen.dart';
 import 'package:note/utils/constants.dart';
@@ -124,7 +123,7 @@ class NoteListScreen extends StatelessWidget {
               text: TextSpan(
                   style: noNotesStyle,
                   children: [
-                    TextSpan(text: ' Non disponible'),
+                    TextSpan(text: 'Aucune note "'),
                     TextSpan(
                         text: '+',
                         style: boldPlus,
@@ -132,7 +131,7 @@ class NoteListScreen extends StatelessWidget {
                           ..onTap = () {
                             goToNoteEditScreen(context);
                           }),
-                    TextSpan(text: 'ajouter une nouvelle note'),
+                    TextSpan(text: '" ajouter une nouvelle note'),
                   ]),
             ),
           ],
